@@ -23,7 +23,7 @@ function App() {
         
       <MuiThemeProvider theme={theme}>
       <Button variant="contained" style={{ "fontSize":"50px","min-height": "150px", width: "35%" }} color="primary" size="large">
-        새로 맞추기
+        새로 맞추기zz
       </Button>
       <br></br>
       <Button variant="contained" style={{ "fontSize":"50px","min-height": "150px", width: "35%" }} color="primary" size="large">
