@@ -2,17 +2,20 @@ import React, { Component } from 'react';
 import styled from 'styled-components';
 import { Dispatch, bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { Redirect } from 'react-router-dom';
-import { Header, Content, Footer } from '~/components/login'
+// import { Redirect } from 'react-router-dom';
+import { Header, Footer } from '~/components/home'
 import { AuthActions } from '~/store/actions/auth';
 import { RootState } from '~/store/reducers';
 import { AuthState } from '~/store/reducers/auth';
-import { PAGE_PATHS } from '~/constants';
+import {Content} from "~/components/home";
+// import { PAGE_PATHS } from '~/constants';
 
 const Wrapper = styled.div`
-    width: 360px;
-    height: 600px;
-    background-color: #ffeb33;
+  align-items: center;
+  justify-content: center;
+    width: 0px;
+    height: 0px;
+    background-color: #aaeb33;
 `
 interface Props {
     authActions: typeof AuthActions;
@@ -20,27 +23,16 @@ interface Props {
 }
 
 class HomeContainer extends Component<Props> {
-    // 로그인 실패 메시지 등을 제거
-    componentWillUnmount() {
-        this.props.authActions.changeMessage("");
-    }
 
     render() {
-        const { login, changeMessage } = this.props.authActions;
-        const { token, loginFailuerMsg, loggingIn } = this.props.authState;
-        
-        const contentProps = {
-            login,
-            changeMessage,
-            loginFailuerMsg,
-            loggingIn
-        }
-        if(token) return <Redirect to={PAGE_PATHS.FRIENDS}/>
+
         return(
             <Wrapper>
+
                 <Header/>
-                <Content {...contentProps}/>
+                <Content/>
                 <Footer/>
+
             </Wrapper>
         )
     }

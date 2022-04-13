@@ -1,10 +1,16 @@
-import React,{ useState, ChangeEvent, FormEvent} from 'react';
+import React from 'react';
 import styled from 'styled-components';
-import { LoginData } from '~/types/auth';
+
+// import logo from '/logo_new.png';
+// import '../../App.css';
+// import { Button } from '@material-ui/core'
+// import { MuiThemeProvider, createTheme } from '@material-ui/core/styles';
 
 const Wrapper = styled.main`
+  align-items: center;
+  justify-content: center;
     width: 100%;
-    height: 330px;
+    height: 30px;
     padding-top: 30px;
     & input {   
         display: block;
@@ -63,56 +69,31 @@ const Wrapper = styled.main`
     }
 `;
 
-interface Props {
-    login(loginData: LoginData): void;
-    changeMessage(message: string): void;
-    loginFailuerMsg: string;
-    loggingIn: boolean;
-}
-const Content: React.FC<Props> = (props) => {
-    const { login, changeMessage, loginFailuerMsg, loggingIn } = props;
-    const MAX_LEN = 20;
-    const [userId, setUserId] = useState("");
-    const [password, setPassword] = useState("");
-    const onUserIdChange = (event: ChangeEvent<HTMLInputElement>):void => {
-        event.preventDefault();
-        if(!loggingIn){
-            const value = event.target.value;
-            setUserId(value);
-        }
-    }
 
-    const onPasswordChange = (event: ChangeEvent<HTMLInputElement>):void => {
-        event.preventDefault();
-        if(!loggingIn){
-            const value = event.target.value;
-            setPassword(value);
-            if(value.length >= 5){
-                changeMessage("");
-            }
-        }
-    }
-    const onSubmit = (event: FormEvent<HTMLFormElement>) => {
-        event.preventDefault();
-        if(!loggingIn && password.length >= 5){
-            login({userId, password});
-            setPassword("");
-        }
-    }
+
+const Content: React.FC = () => {
+    // const { login, changeMessage, loginFailuerMsg, loggingIn } = props;
+    // const splashAnimation = () => {
+    //
+    // }
 
     return(
         <Wrapper>
-            <form onSubmit={onSubmit}>
-                <input type="text" value={userId} placeholder="계정" maxLength={MAX_LEN} onChange={onUserIdChange}/>
-                <input type="password" value={password} autoComplete="new-password" placeholder="비밀번호" maxLength={MAX_LEN} onChange={onPasswordChange}/>
-                <button className={loggingIn || password.length < 5? "disabled" : ""}>
-                    {loggingIn ? <i className="fas fa-circle-notch"/> : ""}    
-                    <span>로그인</span>
-                </button>
-                <p>{loginFailuerMsg}</p>
-            </form>
+
+
+
+
+
+            {/*<button style={{ "fontSize":"50px", width: "35%" }} color="primary">*/}
+            {/*    새로 맞추기zz*/}
+            {/*</button>*/}
+            {/*<br></br>*/}
+            {/*<button style={{ "fontSize":"50px", width: "35%" }} color="primary">*/}
+            {/*    기존 컴퓨터 업그레이드*/}
+            {/*</button>*/}
+
         </Wrapper>
     )
-}
+};
 
 export default Content;

@@ -5,7 +5,7 @@ import {
     Route,
     Redirect
 } from 'react-router-dom';
-import { Menu, Login, Signup } from '~/pages';
+import { Menu, Login, Signup, Home } from '~/pages';
 import { PAGE_PATHS } from '~/constants';
 
 class App extends Component {
@@ -13,6 +13,7 @@ class App extends Component {
         return (
             <Router>
                 <Switch>
+                    <Route path={PAGE_PATHS.HOME} component = {Home}/>
                     <Route path={PAGE_PATHS.LOGIN} component = {Login}/>
                     <Route path={PAGE_PATHS.SIGNUP} component = {Signup}/>
                     <Route path={PAGE_PATHS.MENU} component={Menu}/>
