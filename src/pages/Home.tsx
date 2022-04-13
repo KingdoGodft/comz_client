@@ -2,6 +2,7 @@ import React, {useEffect, useState} from 'react';
 import styled from 'styled-components';
 import { HomeContainer } from '~/containers';
 import { Redirect } from "react-router-dom"; //import Redirect first
+// import logo from "~/asset/logo_new.png";
 
 const Wrapper = styled.div`
     display: flex;
@@ -70,7 +71,7 @@ const Home: React.FC = () => {
 
     return(
         <Wrapper>
-            <img id="splashImage" src="/asset/logo_new.png" style={value == 0 ? box_init : (value == 1 ? box_active : box_hidden)} alt="logo" />
+            <img id="splashImage" src="../asset/logo_new.png" style={value == 0 ? box_init : (value == 1 ? box_active : box_hidden)} alt="logo" />
             <HomeContainer/>
         </Wrapper>
 
