@@ -1,6 +1,9 @@
-import { CreateRoomRequest, ChattingResponseDto, FetchChattingRequest, ChangeChattingRoomDto } from '~/types/chatting';
+import { CreateRoomRequest, ChattingResponseDto, FetchChattingRequest, ChangeChattingRoomDto, SendChatRequest, ReceiveChatRequest } from '~/types/chatting';
 
 export enum ChatTypes {
+    ADD_CHAT = "chat/ADD_CHAT",
+    SEND_CHAT = "chat/SEND_CHAT",
+    RECEIVE_CHAT = "chat/RECEIVE_CHAT",
     SHOW_CHATTING_ROOM = "chat/SHOW_CHATTING_ROOM",
     HIDE_CHATTING_ROOM = "chat/HIDE_CHATTING_ROOM",
     CHANGE_CHATTING_ROOM_INFO = "chat/CHANGE_CHATTING_ROOM_INFO",
@@ -9,6 +12,9 @@ export enum ChatTypes {
     FETCH_CHATTING_REQUEST= 'chat/FETCH_CHATTING_REQUEST',
     FETCH_CHATTING_SUCCESS= 'chat/FETCH_CHATTING_SUCCESS',
     FETCH_CHATTING_FAILUER= 'chat/FETCH_CHATTING_FAILUER',
+
+
+
 }
 
 export interface ShowChattingRoomAction {
@@ -28,6 +34,16 @@ export interface ChangeChattingRoomInfoAction {
 export interface AddChattingAction {
     type: ChatTypes.ADD_CHATTING;
     payload: ChattingResponseDto;
+}
+
+export interface ReceiveChatAction {
+    type: ChatTypes.RECEIVE_CHAT;
+    payload: ReceiveChatRequest;
+}
+
+export interface AddChatAction {
+    type: ChatTypes.ADD_CHAT;
+    payload: SendChatRequest;
 }
 
 export interface ReadChattingAction {
@@ -50,6 +66,8 @@ export type ChatActionTypes = ShowChattingRoomAction
 | HideChattingRoomAction
 | ChangeChattingRoomInfoAction
 | AddChattingAction
+| AddChatAction
+| ReceiveChatAction
 | ReadChattingAction
 | FetchChattingAction
 | FectchChattingSuccessAction
@@ -76,6 +94,19 @@ export const addChatting = (chat: ChattingResponseDto): AddChattingAction => ({
     payload: chat
 });
 
+export const addChat = (chat: SendChatRequest): AddChatAction => ({
+    type: ChatTypes.ADD_CHAT,
+    payload: chat
+});
+
+
+// 내가 보내는 채팅
+export const receiveChat = (chat: ReceiveChatRequest): ReceiveChatAction => ({
+    type: ChatTypes.RECEIVE_CHAT,
+    payload: chat
+});
+
+
 // 채팅방에 채팅 읽음 숫자를 줄임
 export const readChatting = (range: Array<number>): ReadChattingAction => ({
     type: ChatTypes.READ_CHATTING,
@@ -89,11 +120,14 @@ export const fetchChatting = (param: FetchChattingRequest) => ({
 })
 
 
+
 export const ChatActions = {
     showChattingRoom,
     hideChattingRoom,
     changeChattingRoomInfo,
     addChatting,
+    addChat,
+    receiveChat,
     readChatting,
     fetchChatting,
 }

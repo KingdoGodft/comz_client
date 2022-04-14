@@ -73,6 +73,21 @@ export interface initRoomResponse {
 
 }
 
+export interface SendChatRequest {
+    user_id:string;
+    content:string;
+}
+
+
+export interface ReceiveChatRequest {
+    user_id : string;
+    content:string;
+    createdAt:Date;
+    id:number;
+    chat_type:string;
+}
+
+
 // 채팅방 리스트의 채팅방들 정보를 바꿀 때 요청
 export interface UpdateRoomListDto {
     room_id: number;
@@ -101,6 +116,20 @@ export interface ChattingResponseDto{
     message: string;
     not_read: number;
     createdAt: Date;
+}
+
+export interface ChatDto{
+    // id: number;
+    // room_id: number;
+    // send_user_id: number;
+    // message: string;
+    // not_read: number;
+    // createdAt: Date;
+    user_id : string;
+    content:string;
+    createdAt:Date;
+    id:number;
+    chat_type:string;
 }
 
 // 서버에 채팅 가져오기

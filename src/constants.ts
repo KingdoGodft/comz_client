@@ -10,7 +10,7 @@ export enum PAGE_PATHS  {
 }
 
 // export const HOST = process.env.HOST || 'http://helpcomz.ml:8000';
-export const HOST = 'http://helpcomz.ml:8000';
+export const HOST = 'http://localhost:8000';
 
 export const API_HOST = process.env.API_HOST || `${HOST}`;
 

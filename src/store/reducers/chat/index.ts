@@ -20,6 +20,14 @@ const initialState: ChatState = {
 
 const chatReducer = (state = initialState, action: ChatActionTypes ) => {
     switch(action.type){
+        case ChatTypes.ADD_CHAT :
+            return {
+                ...state,
+                chatting: [
+                    ...state.chatting,
+                    action.payload
+                ]
+            }
         case ChatTypes.SHOW_CHATTING_ROOM : 
             return{
                 ...state,

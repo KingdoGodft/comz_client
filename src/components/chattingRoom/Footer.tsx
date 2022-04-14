@@ -24,7 +24,7 @@ const Wrapper = styled.footer`
             outline: none;
         }
         & textarea {
-            width: 90%;
+            width: 100%;
             resize: none;
             height: 100%;
             min-height:110px;
