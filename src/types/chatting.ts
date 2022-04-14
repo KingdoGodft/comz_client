@@ -76,6 +76,9 @@ export interface initRoomResponse {
 export interface SendChatRequest {
     user_id:string;
     content:string;
+    createdAt:Date;
+    isMine:boolean;
+    id:number;
 }
 
 
@@ -85,6 +88,7 @@ export interface ReceiveChatRequest {
     createdAt:Date;
     id:number;
     chat_type:string;
+    isMine:boolean;
 }
 
 
@@ -110,12 +114,15 @@ export interface ChattingRequestDto {
 
 // 채팅 수신
 export interface ChattingResponseDto{
+    content: string;
     id: number;
     room_id: number;
     send_user_id: number;
+    user_id: string;
     message: string;
     not_read: number;
     createdAt: Date;
+    isMine:boolean;
 }
 
 export interface ChatDto{

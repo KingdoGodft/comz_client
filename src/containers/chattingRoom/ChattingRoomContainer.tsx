@@ -12,10 +12,10 @@ import {
     SendChatRequest
 } from '~/types/chatting';
 import { initRoom, sendChat } from '~/apis/chat';
-import { AddFriendRequestDto } from '~/types/friend';
-import { UserResponseDto } from '~/types/user';
-import { addFriendRequest } from '~/apis/friend';
-import { NotFriendWarning } from '~/components/chattingRoom/InfoBlock';
+// import { AddFriendRequestDto } from '~/types/friend';
+// import { UserResponseDto } from '~/types/user';
+// import { addFriendRequest } from '~/apis/friend';
+// import { NotFriendWarning } from '~/components/chattingRoom/InfoBlock';
 
 
 const Wrapper = styled.div`
@@ -40,6 +40,7 @@ interface Props {
 class ChattingRoomContainer extends Component<Props> {
     messageRef: React.RefObject<HTMLDivElement>;
     user_id:'';
+    id:1;
     state = {
         isShowDownBtn: false,
         sendUserId: undefined,
@@ -50,6 +51,7 @@ class ChattingRoomContainer extends Component<Props> {
         // 채팅방 채팅 영역을 나타냅니다.
         this.messageRef = React.createRef<HTMLDivElement>();
         this.user_id = '';
+        this.id = 1;
 
         // const userState = props.rootState.user;
         // const chatState = props.rootState.chat;
@@ -296,7 +298,10 @@ class ChattingRoomContainer extends Component<Props> {
         const onChatSumbmit = (msg: string) => {
             const send: SendChatRequest = {
                 user_id : this.user_id,
-                content:msg
+                content:msg,
+                createdAt : new Date(),
+                isMine : true,
+                id : this.id++
             }
 
             addChat(send);
@@ -314,19 +319,19 @@ class ChattingRoomContainer extends Component<Props> {
         // || !!userState.friends_list.find(friend => friend.id === chatState.participant[0].id); 
 
 
-        const onAddFriendClick = async(friend: UserResponseDto) => {
-            const my_id = userState.id;
-            const friend_id = friend.id;
-            const friend_name = friend.name;
-            const { addFriend } = this.props.userActions;
-            const request: AddFriendRequestDto = { my_id, friend_id, friend_name };
-            try {
-                await addFriendRequest(request);
-                await addFriend(friend);
-            }catch(err) {
-                alert("친구 추가 실패");
-            }
-        }
+        // const onAddFriendClick = async(friend: UserResponseDto) => {
+        //     const my_id = userState.id;
+        //     const friend_id = friend.id;
+        //     const friend_name = friend.name;
+        //     const { addFriend } = this.props.userActions;
+        //     const request: AddFriendRequestDto = { my_id, friend_id, friend_name };
+        //     try {
+        //         await addFriendRequest(request);
+        //         await addFriend(friend);
+        //     }catch(err) {
+        //         alert("친구 추가 실패");
+        //     }
+        // }
 
         const contentProps = {
             myId: userState.id,
@@ -347,7 +352,7 @@ class ChattingRoomContainer extends Component<Props> {
                 <Wrapper>
                     <Header room_name={roomName} hideRoom={hideChattingRoom} />
                     <Content {...contentProps}>
-                        {true ? null : <NotFriendWarning onAddFriendClick={() => onAddFriendClick(chatState.participant[0])}/>}
+                        {/* {true ? null : <NotFriendWarning onAddFriendClick={() => onAddFriendClick(chatState.participant[0])}/>} */}
                         {/* {renderNotification()} */}
                     </Content>
                     <Footer onChatSumbmit={onChatSumbmit} />

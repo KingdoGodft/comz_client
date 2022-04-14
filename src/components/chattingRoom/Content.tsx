@@ -23,23 +23,40 @@ interface Props {
 }
 
 const Content: React.FC<Props> = (props) => {
-    const { myId, chattingList, participant, children, messageRef } = props;
-    const { showProfile } = props;
+    const { chattingList, children, messageRef } = props;
+    // const { showProfile } = props;
     const renderChatting = chattingList.map((chat,idx) => {
+        console.log(chat,idx);
         const createdAt = new Date(chat.createdAt);
         const localeTime = createdAt.toLocaleTimeString();
         const localeDate = createdAt.toLocaleDateString();
         const removeSecond = localeTime.substring(0,localeTime.length-3);
-        const senderId = chat.send_user_id;
+        // const senderId = chat.user_id;
+        const isMine = chat.isMine;
 
         const prevChat = idx >= 1 ? chattingList[idx-1] : undefined;
         const prevCreatedAt = prevChat ? new Date(prevChat.createdAt) : "";
         const prevLocaleDate = prevCreatedAt? prevCreatedAt.toLocaleDateString() : "";
         const prevLocaleTime = prevCreatedAt ? prevCreatedAt.toLocaleTimeString() : "";
         const prevRemoveSecond = prevLocaleTime? prevLocaleTime.substring(0, prevLocaleTime.length-3) : "";
-        const isPrevSender = prevChat? prevChat.send_user_id === senderId : false;
+        const isPrevSender = prevChat? prevChat.isMine == isMine : false;
         const isSameDate = prevLocaleDate === localeDate;
-        const sender = participant.find(person => person.id === senderId) as UserResponseDto;
+        // const sender = participant.find(person => person.id === senderId) as UserResponseDto;
+        const senderData:UserResponseDto = {
+            id: 1,
+            user_id: '컴즈',
+            name: "컴즈",
+            status_msg: "asdf",
+            profile_img_url: "asdf",
+            background_img_url: "asdf"
+        }
+
+        if(isMine){
+            // senderData
+        }
+        else {
+
+        }
         
         // 채팅한 날짜를 표시
         const getDate = () => {
@@ -61,15 +78,15 @@ const Content: React.FC<Props> = (props) => {
         // 마지막 채팅인 경우
         if(idx === chattingList.length - 1){
             // 내가 보낸 채팅인 경우
-            if(senderId === myId){
-                return <MyChat msg={chat.message} notRead={chat.not_read} localeTime={removeSecond} content={date} key={chat.id}/>;
+            if(isMine){
+                return <MyChat msg={chat.content} notRead={chat.not_read} localeTime={removeSecond} content={date} key={chat.id}/>;
             }
 
             // 이전에 보낸 채팅과 사람, 날짜가 동일한 경우
             if(isPrevSender && isSameDate){
-                return <FriendChat msg={chat.message} notRead={chat.not_read} localeTime={removeSecond} key={chat.id}/>;
+                return <FriendChat msg={chat.content} notRead={chat.not_read} localeTime={removeSecond} key={chat.id}/>;
             }
-            return <FriendChatWithThumbnail msg={chat.message} user={sender} notRead={chat.not_read} localeTime={removeSecond} content={date} onImgClick={ () => showProfile(sender)} key={chat.id}/>;
+            return <FriendChatWithThumbnail msg={chat.content} user={senderData} notRead={chat.not_read} localeTime={removeSecond} content={date} key={chat.id}/>;
         }
         /**
          채팅 시간 표시 여부를 결정하기 위해, 다음과 같은 규칙을 적용했습니다. 
@@ -83,16 +100,16 @@ const Content: React.FC<Props> = (props) => {
         const afterRemoveSecond = afterLocaleTime.substring(0, afterLocaleTime.length-3);
         const isSameTimeWithAfterTime = afterRemoveSecond === removeSecond;
         const isSameDateWithAfterTime = afterLocaleDate === localeDate;
-        const time = (afterSender.send_user_id !== senderId || !isSameTimeWithAfterTime || (!isSameDateWithAfterTime)) ? removeSecond : "";
+        const time = (afterSender.isMine != isMine || !isSameTimeWithAfterTime || (!isSameDateWithAfterTime)) ? removeSecond : "";
         // 내가 보낸 경우
-        if(senderId === myId){
-            return <MyChat msg={chat.message} notRead={chat.not_read} localeTime={time} content={date} key={chat.id}/>;
+        if(isMine){
+            return <MyChat msg={chat.content} notRead={chat.not_read} localeTime={time} content={date} key={chat.id}/>;
         }
         // 이전 채팅과 지금 채팅이 보낸 사람, 날짜가 같고, 보낸 시간이 같을 경우
         if(isPrevSender && isSameDate && (prevRemoveSecond === removeSecond)){
-            return <FriendChat msg={chat.message} notRead={chat.not_read} localeTime={time} key={chat.id}/>;            
+            return <FriendChat msg={chat.content} notRead={chat.not_read} localeTime={time} key={chat.id}/>;            
         }
-        return <FriendChatWithThumbnail msg={chat.message} user={sender} notRead={chat.not_read} localeTime={time} content={date} onImgClick={ () => showProfile(sender)} key={chat.id}/>;
+        return <FriendChatWithThumbnail msg={chat.content} user={senderData} notRead={chat.not_read} localeTime={time} content={date} key={chat.id}/>;
         
     })
     

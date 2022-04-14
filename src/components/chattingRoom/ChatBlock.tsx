@@ -15,6 +15,7 @@ const ChatWrapper = styled.div`
     max-width: 70%;
     word-wrap: break-word;
     white-space: pre-wrap;
+    font-size:25px;
 `;
 const RightBlock = styled.div`
     text-align: right;
@@ -32,7 +33,7 @@ const RightBlock = styled.div`
                 min-width: 65px;
                 text-align: right;
                 bottom: 0;
-                left: -70px;
+                left: -120px;
             }
             &.not-read {
                 color: #ffec42;
@@ -58,7 +59,7 @@ const LeftBlock = styled.div`
                 min-width: 65px;
                 text-align: left;
                 bottom: 0;
-                right: -70px;
+                right: -120px;
             }
             &.not-read {
                 color: #ffec42;
@@ -81,6 +82,7 @@ const LeftBlock = styled.div`
     }
 `;
 const NameBlock = styled.div`
+    font-size:20px;
     margin-bottom: 5px;
 `;
 
@@ -97,7 +99,6 @@ interface FriendChatProps {
     localeTime: string;
     notRead: number;
     content?: string;
-    onImgClick():void;
 }
 
 
@@ -139,12 +140,12 @@ export const FriendChat:React.FC<ChatProps> = (props) => {
 
 // 다른 사람이 보냈으며, 프로필 사진을 포함하는 채팅
 export const FriendChatWithThumbnail: React.FC<FriendChatProps> = (props) => {
-    const {user, content, onImgClick} = props
+    const {user, content} = props
     return(
         <React.Fragment>
             {content? <SeparationBlock content={content}/> : null}
             <LeftBlock>
-                <img src={ user.profile_img_url || BASE_IMG_URL } alt="thumbnail" onClick={onImgClick}/>
+                <img src={ BASE_IMG_URL } alt="thumbnail"/>
                 <NameBlock>{user.name}</NameBlock>
                 <div>
                     <Chat {...props} />
