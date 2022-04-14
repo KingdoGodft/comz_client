@@ -30,6 +30,7 @@ module.exports = {
     compress: true,
     historyApiFallback: true,
     port:3000,
+    disableHostCheck:true
   },
   output: {
     path: path.resolve(__dirname, "build"),
