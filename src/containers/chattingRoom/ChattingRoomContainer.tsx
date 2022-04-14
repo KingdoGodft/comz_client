@@ -9,11 +9,11 @@ import { ChatActions } from '~/store/actions/chat';
 import { ProfileActions } from '~/store/actions/profile';
 import { UserActions } from '~/store/actions/user';
 import {
-    ChangeChattingRoomDto, CreateRoomRequest, RoomType,
+    ChangeChattingRoomDto, RoomType,
     ChattingRequestDto, FetchChattingRequest,
-    ReadChatRequest, ReadChatResponse, UpdateRoomListDto
+    ReadChatRequest, ReadChatResponse
 } from '~/types/chatting';
-import { createRoom } from '~/apis/chat';
+import { initRoom } from '~/apis/chat';
 import { AddFriendRequestDto } from '~/types/friend';
 import { UserResponseDto } from '~/types/user';
 import { addFriendRequest } from '~/apis/friend';
@@ -50,51 +50,41 @@ class ChattingRoomContainer extends Component<Props> {
         super(props);
         // 채팅방 채팅 영역을 나타냅니다.
         this.messageRef = React.createRef<HTMLDivElement>();
-        const userState = props.rootState.user;
-        const chatState = props.rootState.chat;
-        const roomList = userState.room_list;
-        const findRoom = roomList.find(room => room.identifier === chatState.identifier);
-        const participant = chatState.participant;
+        // const userState = props.rootState.user;
+        // const chatState = props.rootState.chat;
+        // const roomList = userState.room_list;
+        // const findRoom = roomList.find(room => room.identifier === chatState.identifier);
+        // const participant = chatState.participant;
 
-        const { changeChattingRoomInfo, fetchChatting } = props.chatActions;
-        // 채팅방 목록에서 해당 방의 정보를 찾습니다
-        if (findRoom) {
-            const { updateRoomList } = props.userActions;
-            // 해당 채팅방의 모든 채팅을 읽었다고 표시합니다.
-            const updateRoomObj: UpdateRoomListDto = {
-                room_id: findRoom.room_id,
-                not_read_chat: 0
-            }
-            updateRoomList(updateRoomObj);
-            const roomObj: ChangeChattingRoomDto = {
-                ...findRoom,
-                participant,
+        // const { changeChattingRoomInfo, fetchChatting } = props.chatActions;
+        // // 채팅방 목록에서 해당 방의 정보를 찾습니다
+        // if (findRoom) {
+        //     const { updateRoomList } = props.userActions;
+        //     // 해당 채팅방의 모든 채팅을 읽었다고 표시합니다.
+        //     const updateRoomObj: UpdateRoomListDto = {
+        //         room_id: findRoom.room_id,
+        //         not_read_chat: 0
+        //     }
+        //     updateRoomList(updateRoomObj);
+        //     const roomObj: ChangeChattingRoomDto = {
+        //         ...findRoom,
+        //         participant,
                 
-            }
-            changeChattingRoomInfo(roomObj);
-            // 서버에서 해당 채팅방의 채팅 목록을 가져옵니다.
-            fetchChatting({
-                room_id: findRoom.room_id,
-                cursor: null,
-            });
-        }
-        // 없다면 서버에 채팅방을 만들게 요청하고, 만들어진 채팅방의 정보를 얻습니다.
-        else {
-            const createRoomObj: CreateRoomRequest  = {
-                my_id: userState.id,
-                type: chatState.type as RoomType,
-                identifier: chatState.identifier,
-                room_name: "",
-                participant,
-            }
-            createRoom(createRoomObj).then(room => {
-                const roomObj: ChangeChattingRoomDto = {
-                    ...room,
-                    participant,
-                }
-                changeChattingRoomInfo(roomObj);
-            });
-        }
+        //     }
+        //     changeChattingRoomInfo(roomObj);
+        //     // 서버에서 해당 채팅방의 채팅 목록을 가져옵니다.
+        //     fetchChatting({
+        //         room_id: findRoom.room_id,
+        //         cursor: null,
+        //     });
+        // }
+        // // 없다면 서버에 채팅방을 만들게 요청하고, 만들어진 채팅방의 정보를 얻습니다.
+        // else {
+
+        initRoom().then(data => {
+            console.log(data);
+        });
+        // }
     }
 
     componentDidMount() {
@@ -290,8 +280,11 @@ class ChattingRoomContainer extends Component<Props> {
         const userState = this.props.rootState.user;
         const chatState = this.props.rootState.chat;
         const authState = this.props.rootState.auth;
-        const roomName = chatState.room_name || chatState.participant[0].name;
-        const isMe = chatState.participant[0].id === userState.id;
+        // const roomName = chatState.room_name || chatState.participant[0].name || "test";
+        // const isMe = chatState.participant[0].id === userState.id;
+        // const isGroup = chatState.type === "group";
+        const roomName = "컴즈";
+        const isMe = false;
         const isGroup = chatState.type === "group";
         const { hideChattingRoom } = this.props.chatActions;
         const { showProfile } = this.props.profileActions;
@@ -309,8 +302,8 @@ class ChattingRoomContainer extends Component<Props> {
             authState.socket?.emit('message', chattingRequset);
         }
 
-        const isFriend: boolean = isGroup || isMe 
-        || !!userState.friends_list.find(friend => friend.id === chatState.participant[0].id); 
+        // const isFriend: boolean = isGroup || isMe 
+        // || !!userState.friends_list.find(friend => friend.id === chatState.participant[0].id); 
 
 
         const onAddFriendClick = async(friend: UserResponseDto) => {
@@ -346,7 +339,7 @@ class ChattingRoomContainer extends Component<Props> {
                 <Wrapper>
                     <Header room_name={roomName} hideRoom={hideChattingRoom} />
                     <Content {...contentProps}>
-                        {isFriend ? null : <NotFriendWarning onAddFriendClick={() => onAddFriendClick(chatState.participant[0])}/>}
+                        {true ? null : <NotFriendWarning onAddFriendClick={() => onAddFriendClick(chatState.participant[0])}/>}
                         {renderNotification()}
                     </Content>
                     <Footer onChatSumbmit={onChatSumbmit} />

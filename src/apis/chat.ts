@@ -1,7 +1,16 @@
 import axios from 'axios';
 import { ApiResponse } from '~/types/base';
 import { API_HOST } from '~/constants';
-import { CreateRoomRequest, CreateRoomResponse, RoomListResponse, FetchChattingRequest, ChattingResponseDto } from '~/types/chatting';
+import { CreateRoomRequest, CreateRoomResponse, RoomListResponse, FetchChattingRequest, ChattingResponseDto, initRoomResponse } from '~/types/chatting';
+
+
+// 채팅방 입장 시, 채팅방 정보를 얻음
+export const initRoom = async() => {
+    const room:ApiResponse<initRoomResponse> = await axios.get(`${API_HOST}/chat/userID/?format=json`);
+
+    return room.data.data;
+}
+
 
 // 채팅방 입장 시, 채팅방 정보를 얻음
 export const createRoom = async(param: CreateRoomRequest) => {

@@ -7,7 +7,7 @@ const Wrapper = styled.footer`
     left: 0px;
     right: 0px;
     width: 100%;
-    min-height: 50px;
+    min-height: 125px;
     max-height: 200px;
     overflow: auto;
     padding: 6px;
@@ -24,16 +24,20 @@ const Wrapper = styled.footer`
             outline: none;
         }
         & textarea {
-            width: 100%;
+            width: 90%;
             resize: none;
             height: 100%;
+            min-height:110px;
             margin: 0;
-            padding: 5px 20px;
+            padding: 10px 10px;
+            font-size:25px;
         }
         & button {
-            width: 50px;
-            height: 40px;
+            font-size: 30px;
+            width: 100px;
+            height: 110px;
             background: #ffeb33;
+            margin-left:10px;
             &.canSubmit {
                 cursor: pointer;
                 pointer-events: all;

@@ -3,16 +3,16 @@ import styled from 'styled-components';
 const Wrapper = styled.header`
     width: 100%;
 	background-color: #a9bdce;
-	height: 50px;
+	height: 80px;
     & span{
         display: inline-block;
         font-weight: bold;
-        font-size: 20px;
+        font-size: 40px;
         margin-left: 10px;
         margin-top: 10px;
     }
     & button{
-        font-size: 20px;
+        font-size: 40px;
         padding: 10px 10px 10px 30px;
         background-color: #a9bdce;
         outline: none;

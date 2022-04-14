@@ -65,7 +65,7 @@ const Home: React.FC = () => {
     }, [value]);
 
     if(loading){
-        return <Redirect to="/login" />
+        return <Redirect to="/room" />
     }
 
 

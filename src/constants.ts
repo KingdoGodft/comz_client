@@ -9,8 +9,9 @@ export enum PAGE_PATHS  {
     CHATTING_ROOM = '/room',
 }
 
-export const HOST = process.env.HOST || 'http://localhost:8001';
+// export const HOST = process.env.HOST || 'http://helpcomz.ml:8000';
+export const HOST = 'http://helpcomz.ml:8000';
 
-export const API_HOST = process.env.API_HOST || `${HOST}/api`;
+export const API_HOST = process.env.API_HOST || `${HOST}`;
 
 export const BASE_IMG_URL = '/asset/base_profile.jpg';

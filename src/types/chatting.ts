@@ -67,6 +67,12 @@ export interface CreateRoomResponse {
     updatedAt: Date;
 }
 
+export interface initRoomResponse {
+
+    user_id: string;
+
+}
+
 // 채팅방 리스트의 채팅방들 정보를 바꿀 때 요청
 export interface UpdateRoomListDto {
     room_id: number;

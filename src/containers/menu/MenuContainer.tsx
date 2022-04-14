@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
-import { Redirect } from 'react-router-dom';
+// import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { Dispatch, bindActionCreators} from 'redux';
 import { Socket } from 'socket.io-client';
@@ -10,7 +10,7 @@ import { AuthActions } from '~/store/actions/auth';
 import { UserActions } from '~/store/actions/user';
 import { ChatActions } from '~/store/actions/chat';
 import { RootState } from '~/store/reducers';
-import { PAGE_PATHS } from '~/constants';
+// import { PAGE_PATHS } from '~/constants';
 import { Auth } from '~/types/auth';
 import { ProfileContainer, ChattingRoomContainer } from '~/containers';
 import { ChattingResponseDto, UpdateRoomListDto } from '~/types/chatting';
@@ -85,16 +85,16 @@ class MenuContainer extends Component<Props> {
     render() {
         const { logout } = this.props.authActions;
         const authState = this.props.rootState.auth;
-        const token = authState.auth;
+        // const token = authState.auth;
         const socket = authState.socket as typeof Socket;
         const chatState = this.props.rootState.chat;
         const userState = this.props.rootState.user;
         const roomList = userState.room_list;
         
         // 로그인 상태가 아니라면 로그인 메뉴로 이동합니다.
-        if(!token) {
-            return <Redirect to={PAGE_PATHS.LOGIN}/>
-        }
+        // if(!token) {
+        //     return <Redirect to={PAGE_PATHS.LOGIN}/>
+        // }
 
         return (
             <React.Fragment>
