@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { ApiResponse } from '~/types/base';
 import { API_HOST } from '~/constants';
-import { CreateRoomRequest, CreateRoomResponse, RoomListResponse, FetchChattingRequest, ChattingResponseDto, initRoomResponse, SendChatRequest, ReceiveChatRequest } from '~/types/chatting';
+import { CreateRoomRequest, CreateRoomResponse, RoomListResponse, FetchChattingRequest, ChattingResponseDto, initRoomResponse } from '~/types/chatting';
 
 
 // 채팅방 입장 시, 채팅방 정보를 얻음
@@ -15,8 +15,8 @@ export const initRoom = async() => {
 }
 
 // 채팅방 입장 시, 채팅방 정보를 얻음
-export const sendChat = async(param:SendChatRequest) => {
-    const res:ApiResponse<ReceiveChatRequest> = await axios.post(`${API_HOST}/chat/chat/`,{
+export const sendChat = async(param:any) => {
+    const res:ApiResponse<any> = await axios.post(`${API_HOST}/chat/chat/`,{
         "user_id" : param.user_id,
         "content" : param.content,
 
@@ -25,7 +25,14 @@ export const sendChat = async(param:SendChatRequest) => {
 
     console.log(res);
 
-    return res.data.data;
+    if(Array.isArray(res.data)){
+        let returnData = res.data[res.data.length-1];
+        returnData.id = res.data.length;
+        returnData.createdAt = new Date(returnData.created_at);
+        return returnData;
+    }
+
+    return res.data;
 }
 
 

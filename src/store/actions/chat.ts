@@ -1,4 +1,4 @@
-import { CreateRoomRequest, ChattingResponseDto, FetchChattingRequest, ChangeChattingRoomDto, SendChatRequest, ReceiveChatRequest } from '~/types/chatting';
+import { CreateRoomRequest, ChattingResponseDto, FetchChattingRequest, ChangeChattingRoomDto, SendChatRequest } from '~/types/chatting';
 
 export enum ChatTypes {
     ADD_CHAT = "chat/ADD_CHAT",
@@ -38,7 +38,7 @@ export interface AddChattingAction {
 
 export interface ReceiveChatAction {
     type: ChatTypes.RECEIVE_CHAT;
-    payload: ReceiveChatRequest;
+    payload: ChattingResponseDto;
 }
 
 export interface AddChatAction {
@@ -94,14 +94,14 @@ export const addChatting = (chat: ChattingResponseDto): AddChattingAction => ({
     payload: chat
 });
 
-export const addChat = (chat: SendChatRequest): AddChatAction => ({
+export const addChat = (chat: any): AddChatAction => ({
     type: ChatTypes.ADD_CHAT,
     payload: chat
 });
 
 
 // 내가 보내는 채팅
-export const receiveChat = (chat: ReceiveChatRequest): ReceiveChatAction => ({
+export const receiveChat = (chat: ChattingResponseDto): ReceiveChatAction => ({
     type: ChatTypes.RECEIVE_CHAT,
     payload: chat
 });

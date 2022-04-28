@@ -7,7 +7,7 @@ const BorderBlock = styled.div`
     position: relative;
     text-align: center;
     width: 100%;
-    padding: 40px 0;
+    padding: 8px 0;
     font-size:20px;
     & span {
         position: relative;

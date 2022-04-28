@@ -20,6 +20,15 @@ const initialState: ChatState = {
 
 const chatReducer = (state = initialState, action: ChatActionTypes ) => {
     switch(action.type){
+        // case ChatTypes.RECEIVE_CHAT :
+        //     console.log('asdf',state.chatting, action);
+        //     return {
+        //         ...state,
+        //         chatting: [
+        //             ...state.chatting,
+        //             action.payload
+        //         ]
+        //     }
         case ChatTypes.ADD_CHAT :
             return {
                 ...state,

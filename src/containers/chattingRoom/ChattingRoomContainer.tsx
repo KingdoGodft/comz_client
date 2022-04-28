@@ -8,9 +8,9 @@ import { RootState } from '~/store/reducers';
 import { ChatActions } from '~/store/actions/chat';
 import { ProfileActions } from '~/store/actions/profile';
 import { UserActions } from '~/store/actions/user';
-import {
-    SendChatRequest
-} from '~/types/chatting';
+// import {
+//     SendChatRequest
+// } from '~/types/chatting';
 import { initRoom, sendChat } from '~/apis/chat';
 // import { AddFriendRequestDto } from '~/types/friend';
 // import { UserResponseDto } from '~/types/user';
@@ -292,25 +292,32 @@ class ChattingRoomContainer extends Component<Props> {
         const roomName = "컴즈";
         // const isMe = false;
         // const isGroup = chatState.type === "group";
-        const { hideChattingRoom, addChat, receiveChat } = this.props.chatActions;
+        const { hideChattingRoom, addChat } = this.props.chatActions;
         const { showProfile } = this.props.profileActions;
         
         const onChatSumbmit = (msg: string) => {
-            const send: SendChatRequest = {
+            const send: any = {
                 user_id : this.user_id,
                 content:msg,
                 createdAt : new Date(),
                 isMine : true,
-                id : this.id++
+                id : this.id+=2
             }
 
             addChat(send);
+            
+            let self = this;
+            setTimeout(function(){
+                self.pageDown();
 
+            },100)
             // 채팅방 참여자들에게 해당 메시지를 보냅니다.
             // authState.socket?.emit('message', chattingRequset);
 
             sendChat(send).then(data => {
-                receiveChat(data);
+                console.log("add Chat data!",data);
+                addChat(data);
+                this.pageDown();
     
             });
         }
