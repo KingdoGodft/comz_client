@@ -83,12 +83,23 @@ class ChattingRoomContainer extends Component<Props> {
         // }
         // // 없다면 서버에 채팅방을 만들게 요청하고, 만들어진 채팅방의 정보를 얻습니다.
         // else {
-
+        const { addChat } = this.props.chatActions;
         initRoom().then(data => {
             this.user_id = data['user_id'];
 
+
+
             console.log(this.user_id);
 
+            const send: any = {
+                user_id : this.user_id,
+                content:"안녕하세요 컴즈입니다\n응 자퇴하면 그만이야~~~",
+                createdAt : new Date(),
+                isMine : false,
+                id : this.id+=1
+            }
+
+            addChat(send);
         });
         // }
     }
