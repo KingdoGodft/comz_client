@@ -130,9 +130,10 @@ export const Part: React.FC<PartProps> = ({part}) => {
     );
 }
 
-export const PartChat: React.FC<ChatProps> = ({parts, localeTime, notRead}) => {
+export const PartChat: React.FC<ChatProps> = ({msg, parts, localeTime, notRead}) => {
     return(
         <ChatWrapper>
+            {msg}
             <Table style={{width: "800px"}}>
                 <TableBody>
                     <Part part={parts[0]}></Part>

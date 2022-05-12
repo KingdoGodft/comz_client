@@ -327,7 +327,13 @@ class ChattingRoomContainer extends Component<Props> {
 
             sendChat(send).then(data => {
                 console.log("add Chat data!",data);
-                addChat(data);
+                if(Array.isArray(data)){
+                    data.forEach(element => {
+                        element.createdAt = new Date(element.created_at);
+                        addChat(element);
+                        
+                    });
+                }
                 this.pageDown();
     
             });

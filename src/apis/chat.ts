@@ -23,14 +23,15 @@ export const sendChat = async(param:any) => {
     });
 
 
-    console.log(res);
+    console.log("sendChat result : ",res);
 
-    if(Array.isArray(res.data)){
-        let returnData = res.data[res.data.length-1];
-        returnData.id = res.data.length;
-        returnData.createdAt = new Date(returnData.created_at);
-        return returnData;
-    }
+
+    // if(Array.isArray(res.data)){
+    //     let returnData = res.data[res.data.length-1];
+    //     returnData.id = res.data.length;
+    //     returnData.createdAt = new Date(returnData.created_at);
+    //     return returnData;
+    // }
 
     return res.data;
 }
