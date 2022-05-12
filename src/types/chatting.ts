@@ -123,6 +123,9 @@ export interface ChattingResponseDto{
     not_read: number;
     createdAt: Date;
     isMine:boolean;
+    chat_type:string;
+    parts:any;
+    
 }
 
 export interface ChatDto{

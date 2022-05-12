@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { MyChat, FriendChat, FriendChatWithThumbnail } from '~/components/chattingRoom/ChatBlock';
+import { MyChat, FriendChat, FriendChatWithThumbnail, PartsChat, PartsChatWithThumbnail } from '~/components/chattingRoom/ChatBlock';
 import { ChattingResponseDto } from '~/types/chatting';
 import { UserResponseDto } from '~/types/user';
 
@@ -83,10 +83,23 @@ const Content: React.FC<Props> = (props) => {
             }
 
             // 이전에 보낸 채팅과 사람, 날짜가 동일한 경우
+                
             if(isPrevSender && isSameDate){
-                return <FriendChat msg={chat.content} notRead={chat.not_read} localeTime={removeSecond} key={chat.id}/>;
+                if(chat.chat_type !== "parts"){
+                    return <FriendChat msg={chat.content} notRead={chat.not_read} localeTime={removeSecond} key={chat.id}/>;
+                }
+                else {
+                    return <PartsChat parts={chat.parts} msg={chat.content} notRead={chat.not_read} localeTime={removeSecond} key={chat.id}/>;
+
+                }
             }
-            return <FriendChatWithThumbnail msg={chat.content} user={senderData} notRead={chat.not_read} localeTime={removeSecond} content={date} key={chat.id}/>;
+            if(chat.chat_type !== "parts"){
+                return <FriendChatWithThumbnail msg={chat.content} user={senderData} notRead={chat.not_read} localeTime={removeSecond} content={date} key={chat.id}/>;
+            }
+            else {
+                return <PartsChatWithThumbnail parts={chat.parts} msg={chat.content} user={senderData} notRead={chat.not_read} localeTime={removeSecond} content={date} key={chat.id}/>;
+
+            }
         }
         /**
          채팅 시간 표시 여부를 결정하기 위해, 다음과 같은 규칙을 적용했습니다. 
@@ -107,9 +120,21 @@ const Content: React.FC<Props> = (props) => {
         }
         // 이전 채팅과 지금 채팅이 보낸 사람, 날짜가 같고, 보낸 시간이 같을 경우
         if(isPrevSender && isSameDate && (prevRemoveSecond === removeSecond)){
-            return <FriendChat msg={chat.content} notRead={chat.not_read} localeTime={time} key={chat.id}/>;            
+            if(chat.chat_type !== "parts"){
+                return <FriendChat msg={chat.content} notRead={chat.not_read} localeTime={time} key={chat.id}/>;
+            }
+            else {
+                return <PartsChat parts={chat.parts} msg={chat.content} notRead={chat.not_read} localeTime={time} key={chat.id}/>;
+
+            } 
         }
-        return <FriendChatWithThumbnail msg={chat.content} user={senderData} notRead={chat.not_read} localeTime={time} content={date} key={chat.id}/>;
+        if(chat.chat_type !== "parts"){
+            return <FriendChatWithThumbnail msg={chat.content} user={senderData} notRead={chat.not_read} localeTime={time} content={date} key={chat.id}/>;
+        }
+        else {
+            return <PartsChatWithThumbnail parts={chat.parts} msg={chat.content} user={senderData} notRead={chat.not_read} localeTime={time} content={date} key={chat.id}/>;
+
+        }
         
     })
     

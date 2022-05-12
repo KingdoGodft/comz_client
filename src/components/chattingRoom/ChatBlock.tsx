@@ -3,6 +3,8 @@ import styled from 'styled-components';
 import {UserResponseDto} from '~/types/user';
 import { BASE_IMG_URL } from '~/constants';
 import { SeparationBlock } from './InfoBlock';
+import { Table, TableBody, TableRow, TableCell } from '@material-ui/core';
+import { Link } from 'react-router-dom';
 
 // 채팅방에서 채팅을 나타내는 컴포넌트
 const ChatWrapper = styled.div`
@@ -71,7 +73,7 @@ const LeftBlock = styled.div`
         }
     }
     & img {
-        position: absolute;
+        // position: absolute;
         top: 3px;
         left: 0;
         height: 45px;
@@ -80,17 +82,25 @@ const LeftBlock = styled.div`
         float: left;
         cursor: pointer;
     }
+
+
 `;
 const NameBlock = styled.div`
     font-size:20px;
     margin-bottom: 5px;
 `;
 
+interface PartProps {
+    part?:any;
+}
+
+
 interface ChatProps {
     msg: string;
     localeTime: string;
     notRead: number;
     content?: string;
+    parts?:any;
 }
 
 interface FriendChatProps {
@@ -99,8 +109,47 @@ interface FriendChatProps {
     localeTime: string;
     notRead: number;
     content?: string;
+    parts?:any;
 }
 
+
+export const Part: React.FC<PartProps> = ({part}) => {
+    return(
+        // {/* // <Link to={part.shop_link} target="_blank" rel="noopener noreferrer"> */}
+        <TableRow>
+            <Link to={{ pathname: part.shop_link }} target="_blank">
+
+                <TableCell style={{width: '5%',padding:'3px'}} align='center' color='red'>{part.part_type}</TableCell>
+                <TableCell style={{width: '5%',padding:'3px'}} align='center' color='red'><div><img src={part.thumbnail}></img></div></TableCell>
+                <TableCell style={{width: '25%',padding:'3px'}} align='center'><div>{part.part_name}</div><div>{part.price}</div></TableCell>
+                {/* <TableCell align='center'>내용</TableCell>
+                <TableCell align='center'>글삭제</TableCell> */}
+            </Link>
+        </TableRow>
+        
+    );
+}
+
+export const PartChat: React.FC<ChatProps> = ({parts, localeTime, notRead}) => {
+    return(
+        <ChatWrapper>
+            <Table style={{width: "800px"}}>
+                <TableBody>
+                    <Part part={parts[0]}></Part>
+                    <Part part={parts[1]}></Part>
+                    <Part part={parts[2]}></Part>
+                    <Part part={parts[3]}></Part>
+                    <Part part={parts[4]}></Part>
+                    <Part part={parts[5]}></Part>
+                    <Part part={parts[6]}></Part>
+                </TableBody>
+            </Table>
+            
+            <span className="time">{localeTime}</span>
+            <span className="not-read">{notRead > 0 ? notRead : ""}</span>
+        </ChatWrapper>
+    );
+}
 
 export const Chat: React.FC<ChatProps> = ({msg, localeTime, notRead}) => {
     return(
@@ -111,6 +160,8 @@ export const Chat: React.FC<ChatProps> = ({msg, localeTime, notRead}) => {
         </ChatWrapper>
     );
 }
+
+
 
 // 내가 보낸 채팅
 export const MyChat:React.FC<ChatProps> = (props) => {
@@ -149,6 +200,38 @@ export const FriendChatWithThumbnail: React.FC<FriendChatProps> = (props) => {
                 <NameBlock>{user.name}</NameBlock>
                 <div>
                     <Chat {...props} />
+                </div>
+            </LeftBlock>
+        </React.Fragment>
+    )
+}
+
+
+
+
+
+// 다른 사람이 보낸 채팅 
+export const PartsChat:React.FC<ChatProps> = (props) => {
+    return (
+        <LeftBlock>
+            <div>
+                <PartChat {...props} />
+            </div>
+        </LeftBlock>
+    )
+}
+
+// 다른 사람이 보냈으며, 프로필 사진을 포함하는 채팅
+export const PartsChatWithThumbnail: React.FC<FriendChatProps> = (props) => {
+    const {user, content} = props
+    return(
+        <React.Fragment>
+            {content? <SeparationBlock content={content}/> : null}
+            <LeftBlock>
+                <img src={ BASE_IMG_URL } alt="thumbnail"/>
+                <NameBlock>{user.name}</NameBlock>
+                <div>
+                    <PartChat {...props} />
                 </div>
             </LeftBlock>
         </React.Fragment>
