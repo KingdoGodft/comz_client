@@ -37,6 +37,7 @@
   "dependencies": {
     "@babel/runtime": "^7.17.9",
     "@material-ui/core": "^4.12.4",
+    "@ramonak/react-progress-bar": "^4.4.0",
     "@types/axios": "^0.14.0",
     "@types/jwt-decode": "^2.2.1",
     "@types/react-redux": "^7.1.9",
@@ -46,6 +47,7 @@
     "@types/socket.io-client": "^1.4.33",
     "axios": "^0.19.2",
     "jwt-decode": "^2.2.0",
+    "react-is": "^18.1.0",
     "react-redux": "^7.2.1",
     "redux": "^4.0.5",
     "redux-devtools-extension": "^2.13.8",

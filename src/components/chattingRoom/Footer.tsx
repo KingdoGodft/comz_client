@@ -1,5 +1,6 @@
 import React, { useState, FormEvent, KeyboardEvent, ChangeEvent } from 'react';
 import styled from 'styled-components';
+import Progress from './Progress';
 
 const Wrapper = styled.footer`
     position: fixed;
@@ -53,10 +54,12 @@ const Wrapper = styled.footer`
 `;
 
 interface Props {
-    onChatSumbmit(msg: string): void;
+    onChatSumbmit(msg: string, cb?:Function): void;
 }
 const Footer: React.FC<Props> = ({ onChatSumbmit }) => {
     const [ message, setMessage ] = useState("");
+    const [percent, setPercent] = useState(0);
+
     // 채팅 내용이 공백이라면, 채팅을 보낼 수 없도록 설정하였습니다.
     const isCanSubmit = !!message.replace(/ |\n/g,"");
     const btnClassName = isCanSubmit ? "canSubmit": "cannotSubmit";
@@ -67,9 +70,37 @@ const Footer: React.FC<Props> = ({ onChatSumbmit }) => {
     }
     const requestSubmit = () => {
         if(isCanSubmit){
-            onChatSumbmit(message);
+            onChatSumbmit(message, (elem:any)=>{
+                console.log("onChatSubmit Callback : ",elem);
+                onProgressChange(elem);
+            });
             setMessage("");
         }
+    }
+    const onProgressChange = (data:any) => {
+        console.log("onProgresschange ",data.parameters);
+        
+        let p = data.parameters;
+        if(!!p && Object.keys(p).length >= 1){
+            let total = Object.keys(p).length;
+            let curr = 0;
+            Object.keys(p).map(function(key){
+                let val = p[key];
+                if(typeof val === 'string' && val !== ""){
+                    curr++;
+                } else if(Array.isArray(val) && val.length > 0){
+                    curr++;
+                }
+            });
+            let per = curr/total*100;
+            console.log("curr total ",curr,total);
+
+            setPercent(per);
+                
+            
+        }
+        // setPercent(data.progress);
+        // setPercent(44);
     }
     const onSubmit = (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault();
@@ -84,6 +115,7 @@ const Footer: React.FC<Props> = ({ onChatSumbmit }) => {
     }
     return(
         <Wrapper>
+            <Progress percent={percent}/>
             <form onSubmit={onSubmit}>
                 <textarea value={message} autoFocus={true} onChange={onMessageChange} onKeyPress={onEnterPress}/>
                 <button className={btnClassName} type="submit">전송</button>

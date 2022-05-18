@@ -8,6 +8,7 @@ export enum ChatTypes {
     HIDE_CHATTING_ROOM = "chat/HIDE_CHATTING_ROOM",
     CHANGE_CHATTING_ROOM_INFO = "chat/CHANGE_CHATTING_ROOM_INFO",
     ADD_CHATTING = "chat/ADD_CHATTING",
+    CHANGE_PROGRESS = "chat/CHANGE_PROGRESS",
     READ_CHATTING = "chat/READ_CHATTING",
     FETCH_CHATTING_REQUEST= 'chat/FETCH_CHATTING_REQUEST',
     FETCH_CHATTING_SUCCESS= 'chat/FETCH_CHATTING_SUCCESS',
@@ -46,6 +47,12 @@ export interface AddChatAction {
     payload: SendChatRequest;
 }
 
+export interface ChangeProgressAction {
+    type: ChatTypes.CHANGE_PROGRESS;
+    payload: SendChatRequest;
+}
+
+
 export interface ReadChattingAction {
     type: ChatTypes.READ_CHATTING;
     payload: Array<number>;
@@ -67,6 +74,7 @@ export type ChatActionTypes = ShowChattingRoomAction
 | ChangeChattingRoomInfoAction
 | AddChattingAction
 | AddChatAction
+| ChangeProgressAction
 | ReceiveChatAction
 | ReadChattingAction
 | FetchChattingAction
@@ -119,6 +127,11 @@ export const fetchChatting = (param: FetchChattingRequest) => ({
     payload: param,
 })
 
+// 채팅방에 채팅 추가
+export const changeProgress = (chat: any): ChangeProgressAction => ({
+    type: ChatTypes.CHANGE_PROGRESS,
+    payload: chat
+});
 
 
 export const ChatActions = {
@@ -130,4 +143,5 @@ export const ChatActions = {
     receiveChat,
     readChatting,
     fetchChatting,
+    changeProgress
 }
