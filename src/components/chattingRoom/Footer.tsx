@@ -99,6 +99,10 @@ const Footer: React.FC<Props> = ({ onChatSumbmit }) => {
                 
             
         }
+        else {
+            setPercent(0);
+
+        }
         // setPercent(data.progress);
         // setPercent(44);
     }

@@ -7,7 +7,7 @@ import { UserResponseDto } from '~/types/user';
 const Wrapper = styled.main`
     position: absolute;
 	top: 80px;
-    bottom: 123px;
+    bottom: 151px;
 	left: 0px;
     right: 0px;
 	overflow: auto;
