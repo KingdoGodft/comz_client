@@ -92,7 +92,7 @@ const Footer: React.FC<Props> = ({ onChatSumbmit }) => {
                     curr++;
                 }
             });
-            let per = curr/total*100;
+            let per = Math.round(curr/total*100);
             console.log("curr total ",curr,total);
 
             setPercent(per);
