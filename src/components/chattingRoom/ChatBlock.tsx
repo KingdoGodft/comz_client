@@ -119,9 +119,9 @@ export const Part: React.FC<PartProps> = ({part}) => {
         <TableRow>
             <Link to={{ pathname: part.shop_link }} target="_blank">
 
-                <TableCell style={{width: '5%',padding:'3px'}} align='center' color='red'>{part.part_type}</TableCell>
-                <TableCell style={{width: '5%',padding:'3px'}} align='center' color='red'><div><img src={part.thumbnail}></img></div></TableCell>
-                <TableCell style={{width: '25%',padding:'3px'}} align='center'><div>{part.part_name}</div><div>{part.price}</div></TableCell>
+                <TableCell style={{width: '5%',padding:'3px', fontSize:"20px"}} align='center' color='red'>{part.part_type}</TableCell>
+                <TableCell style={{width: '5%',padding:'3px', fontSize:"20px"}} align='center' color='red'><div><img src={part.thumbnail}></img></div></TableCell>
+                <TableCell style={{width: '25%',padding:'3px', fontSize:"20px"}} align='center'><div>{part.part_name}</div><div>{part.price.toLocaleString()+"원"}</div></TableCell>
                 {/* <TableCell align='center'>내용</TableCell>
                 <TableCell align='center'>글삭제</TableCell> */}
             </Link>
@@ -131,6 +131,15 @@ export const Part: React.FC<PartProps> = ({part}) => {
 }
 
 export const PartChat: React.FC<ChatProps> = ({msg, parts, localeTime, notRead}) => {
+    let totalPrice : number = 0;
+
+    for(let i = 0; i<parts.length;i++){
+        totalPrice+=parts[i].price;
+
+    }
+
+
+
     return(
         <ChatWrapper>
             {msg}
@@ -143,6 +152,7 @@ export const PartChat: React.FC<ChatProps> = ({msg, parts, localeTime, notRead})
                     <Part part={parts[4]}></Part>
                     <Part part={parts[5]}></Part>
                     <Part part={parts[6]}></Part>
+                    <TableRow><TableCell style={{width: '5%',padding:'3px',fontSize:'35px'}} align='center' color='red'>{totalPrice.toLocaleString()+"원"}</TableCell></TableRow>
                 </TableBody>
             </Table>
             
