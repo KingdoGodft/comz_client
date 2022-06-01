@@ -93,7 +93,7 @@ class ChattingRoomContainer extends Component<Props> {
 
             const send: any = {
                 user_id : this.user_id,
-                content:"안녕하세요 컴즈입니다.\n원하시는 컴퓨터를 말씀해주세요.\n하고 싶으신 게임 이름이나 옵션 등을 말씀해주시면 됩니다!",
+                content:"안녕하세요 컴즈입니다.\n원하시는 컴퓨터를 말씀해주세요.\n하고 싶으신 게임 이름과 생각하시는 예산을 말씀해주시면 됩니다!",
                 createdAt : new Date(),
                 isMine : false,
                 id : this.id+=1
